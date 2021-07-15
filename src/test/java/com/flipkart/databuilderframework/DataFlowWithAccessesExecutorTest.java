@@ -25,7 +25,7 @@ public class DataFlowWithAccessesExecutorTest {
     }
 
     @Test
-    public void withoutAnyAccessData() throws DataBuilderFrameworkException, DataValidationException {
+    public void withoutAnyAccessData() throws DataBuilderFrameworkException, DataValidationException, RateLimitException {
         DataFlowInstance dataFlowInstance = new DataFlowInstance();
         dataFlowInstance.setId("testflow");
         dataFlowInstance.setDataFlow(dataFlow);
@@ -43,7 +43,7 @@ public class DataFlowWithAccessesExecutorTest {
     }
 
     @Test
-    public void withAccessData() throws DataBuilderFrameworkException, DataValidationException {
+    public void withAccessData() throws DataBuilderFrameworkException, DataValidationException, RateLimitException {
         DataFlowInstance dataFlowInstance = new DataFlowInstance();
         dataFlowInstance.setId("testflow");
         dataFlowInstance.setDataFlow(dataFlow);
@@ -60,7 +60,7 @@ public class DataFlowWithAccessesExecutorTest {
         }
     }
     @Test
-    public void withoutOnlyAccessData() throws DataBuilderFrameworkException, DataValidationException {
+    public void withoutOnlyAccessData() throws DataBuilderFrameworkException, DataValidationException, RateLimitException {
         DataFlowInstance dataFlowInstance = new DataFlowInstance();
         dataFlowInstance.setId("testflow");
         dataFlowInstance.setDataFlow(dataFlow);

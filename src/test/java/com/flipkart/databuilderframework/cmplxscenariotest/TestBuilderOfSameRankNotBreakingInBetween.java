@@ -3,6 +3,7 @@ package com.flipkart.databuilderframework.cmplxscenariotest;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import com.flipkart.databuilderframework.engine.RateLimitException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -80,7 +81,7 @@ public class TestBuilderOfSameRankNotBreakingInBetween {
 	}
 
 	@Test
-	public void testToCheckIfBuilderA2RunsEvenWhenRankIsLess() throws DataBuilderFrameworkException, DataValidationException{
+	public void testToCheckIfBuilderA2RunsEvenWhenRankIsLess() throws DataBuilderFrameworkException, DataValidationException, RateLimitException {
 		DataFlow dataflow = new DataFlow();
 		dataflow.setDescription("Complex DataFlow");
 		dataflow.setEnabled(true);

@@ -128,6 +128,9 @@ public class ContextSwitchOverHeadTest {
 					} catch (DataValidationException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
+					}catch (RateLimitException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 				}
 			});
@@ -155,6 +158,9 @@ public class ContextSwitchOverHeadTest {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} catch (DataValidationException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (RateLimitException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
@@ -185,6 +191,9 @@ public class ContextSwitchOverHeadTest {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} catch (DataValidationException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (RateLimitException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}

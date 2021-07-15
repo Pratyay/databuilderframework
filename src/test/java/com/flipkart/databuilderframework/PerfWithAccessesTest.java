@@ -34,7 +34,7 @@ public class PerfWithAccessesTest {
     }
 
     @Test
-    public void shouldBeComparableWithoutAnyAccesibleData() throws DataBuilderFrameworkException, DataValidationException {
+    public void shouldBeComparableWithoutAnyAccesibleData() throws DataBuilderFrameworkException, DataValidationException, RateLimitException {
         long simpleTime = 0;
         for (int i = 0; i < 10000; i++) {
             DataFlowInstance dataFlowInstance = new DataFlowInstance();

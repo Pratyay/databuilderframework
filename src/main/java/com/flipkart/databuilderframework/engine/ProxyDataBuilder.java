@@ -11,7 +11,7 @@ public class ProxyDataBuilder extends DataBuilder {
         setDataBuilderMeta(dataBuilderMeta);
     }
     @Override
-    public Data process(DataBuilderContext context) throws DataBuilderException, DataValidationException {
+    public Data process(DataBuilderContext context) throws DataBuilderException, DataValidationException, RateLimitException {
         return impl.process(context);
     }
 }

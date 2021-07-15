@@ -112,7 +112,7 @@ public abstract class DataFlowExecutor {
     public DataExecutionResponse run(DataBuilderContext dataBuilderContext,
                                               DataFlowInstance dataFlowInstance,
                                               DataDelta dataDelta) throws DataBuilderFrameworkException, DataValidationException, RateLimitException {
-        DataFlow dataFlow = dataFlowInstance.getDataFlow();data
+        DataFlow dataFlow = dataFlowInstance.getDataFlow();
         Preconditions.checkArgument(null != dataFlow.getDataBuilderFactory()
                 || null != dataBuilderFactory);
         DataBuilderFactory builderFactory = dataFlow.getDataBuilderFactory();
