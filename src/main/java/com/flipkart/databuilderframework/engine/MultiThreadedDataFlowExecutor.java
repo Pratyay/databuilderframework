@@ -246,7 +246,7 @@ public class MultiThreadedDataFlowExecutor extends DataFlowExecutor {
                     response.setGeneratedBy(builderMeta.getName());
                 }
                 return new DataContainer(builderMeta, response);
-            } catch (RateLimitException e) {
+            } catch (DataBuilderException e) {
                 logger.error("Error running builder: " + builderMeta.getName());
                 for (DataBuilderExecutionListener listener : dataBuilderExecutionListener) {
                     try {
@@ -256,16 +256,9 @@ public class MultiThreadedDataFlowExecutor extends DataFlowExecutor {
                         logger.error("Error running post-execution listener: ", error);
                     }
                 }
-                throw new RateLimitException(RateLimitException.ErrorCode.RATE_LIMITED, e.getMessage(), new DataExecutionResponse(responseData),e.getDetails(), e);
-            }catch (DataBuilderException e) {
-                logger.error("Error running builder: " + builderMeta.getName());
-                for (DataBuilderExecutionListener listener : dataBuilderExecutionListener) {
-                    try {
-                        listener.afterException(dataBuilderContext, dataFlowInstance, builderMeta, dataDelta, responseData, e);
-
-                    } catch (Throwable error) {
-                        logger.error("Error running post-execution listener: ", error);
-                    }
+                if (DataBuilderException.ErrorCode.RATE_LIMITED == e.getErrorCode())
+                {
+                    throw new RateLimitException(RateLimitException.ErrorCode.RATE_LIMITED, e.getMessage(), new DataExecutionResponse(responseData),e.getDetails(), e);
                 }
                 return new DataContainer(builderMeta, new DataBuilderFrameworkException(DataBuilderFrameworkException.ErrorCode.BUILDER_EXECUTION_ERROR,
                         "Error running builder: " + builderMeta.getName(), e.getDetails(), e));
