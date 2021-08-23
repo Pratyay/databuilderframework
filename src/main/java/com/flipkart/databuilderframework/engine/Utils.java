@@ -100,12 +100,12 @@ public interface Utils {
     }
 
     static DataBuilderMeta meta(Set<String> consumes, Set<String> optionals, Set<String> accesses, Class<? extends DataBuilder> annotatedDataBuilder) {
-        DataBuilderInfo info = annotatedDataBuilder.getAnnotation(DataBuilderInfo.class);
+        DataBuilderClassInfo info = annotatedDataBuilder.getAnnotation(DataBuilderClassInfo.class);
             return new DataBuilderMeta(
-                    consumes != null ? consumes:ImmutableSet.copyOf(info.consumes()),
-                    info.produces(),
+                    consumes != null ? consumes:Sets.newHashSet(),
+                    Utils.name(info.produces()),
                     info.name(),
-                    optionals != null ? optionals:ImmutableSet.copyOf(info.optionals()),
-                    accesses != null ? accesses:ImmutableSet.copyOf(info.accesses()));
+                    optionals != null ? optionals:Sets.newHashSet(),
+                    accesses != null ? accesses:Sets.newHashSet());
     }
 }
