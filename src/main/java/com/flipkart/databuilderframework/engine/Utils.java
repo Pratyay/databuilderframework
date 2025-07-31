@@ -98,4 +98,14 @@ public interface Utils {
             );
         }
     }
+
+    static DataBuilderMeta meta(Set<String> consumes, Set<String> optionals, Set<String> accesses, Class<? extends DataBuilder> annotatedDataBuilder) {
+        DataBuilderClassInfo info = annotatedDataBuilder.getAnnotation(DataBuilderClassInfo.class);
+            return new DataBuilderMeta(
+                    consumes != null ? consumes:Sets.newHashSet(),
+                    Utils.name(info.produces()),
+                    info.name(),
+                    optionals != null ? optionals:Sets.newHashSet(),
+                    accesses != null ? accesses:Sets.newHashSet());
+    }
 }

@@ -52,6 +52,16 @@ public class DataBuilderMetadataManager {
         return this;
     }
 
+    public DataBuilderMetadataManager register(Set<String> consumes, Set<String> optionals, Set<String> accesses, Class<? extends DataBuilder> annotatedDataBuilder) throws DataBuilderFrameworkException {
+        DataBuilderMeta dataBuilderMeta = Utils.meta(consumes, optionals, accesses, annotatedDataBuilder);
+        Preconditions.checkNotNull(dataBuilderMeta,
+                "No useful annotations found on class. Use DataBuilderInfo to annotate");
+        register(
+                dataBuilderMeta,
+                annotatedDataBuilder);
+        return this;
+    }
+
     /**
      * Register builder by using meta directly.
      *
@@ -89,7 +99,9 @@ public class DataBuilderMetadataManager {
     
     public DataBuilderMetadataManager register(Set<String> consumes, Set<String> optionals, Set<String> access, String produces,
             String builder, Class<? extends DataBuilder> dataBuilder) throws DataBuilderFrameworkException {
-        DataBuilderMeta metadata = new DataBuilderMeta(consumes, produces, builder, optionals, access);
+        DataBuilderMeta metadata = null;
+        String s = null;
+        s.toLowerCase();
         if(meta.containsKey(builder)) {
             throw new DataBuilderFrameworkException(DataBuilderFrameworkException.ErrorCode.BUILDER_EXISTS,
                     "A builder with name " + builder + " already exists");

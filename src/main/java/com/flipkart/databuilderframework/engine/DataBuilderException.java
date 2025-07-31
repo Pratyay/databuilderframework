@@ -9,7 +9,7 @@ import java.util.Map;
 public class DataBuilderException extends Exception{
     private Map<String,Object> details;
     public enum ErrorCode {
-        HANDLER_FAILURE
+        HANDLER_FAILURE, RATE_LIMITED
     }
 
     private final ErrorCode errorCode;

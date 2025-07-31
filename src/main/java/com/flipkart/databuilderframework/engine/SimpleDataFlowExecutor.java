@@ -34,7 +34,7 @@ public class SimpleDataFlowExecutor extends DataFlowExecutor {
                                      DataFlowInstance dataFlowInstance,
                                      DataDelta dataDelta,
                                      DataFlow dataFlow,
-                                     DataBuilderFactory builderFactory) throws DataBuilderFrameworkException, DataValidationException {
+                                     DataBuilderFactory builderFactory) throws DataBuilderFrameworkException, DataValidationException, RateLimitException {
         ExecutionGraph executionGraph = dataFlow.getExecutionGraph();
         DataSet dataSet = dataFlowInstance.getDataSet().accessor().copy(); //Create own copy to work with
         DataSetAccessor dataSetAccessor = DataSet.accessor(dataSet);
@@ -96,7 +96,8 @@ public class SimpleDataFlowExecutor extends DataFlowExecutor {
                             }
                         }
 
-                    } catch (DataBuilderException e) {
+                    }
+                    catch (DataBuilderException e) {
                         logger.error("Error running builder: " + builderMeta.getName());
                         for (DataBuilderExecutionListener listener : dataBuilderExecutionListener) {
                             try {
@@ -105,6 +106,11 @@ public class SimpleDataFlowExecutor extends DataFlowExecutor {
                             } catch (Throwable error) {
                                 logger.error("Error running post-execution listener: ", error);
                             }
+                        }
+
+                        if (DataBuilderException.ErrorCode.RATE_LIMITED == e.getErrorCode())
+                        {
+                            throw new RateLimitException(RateLimitException.ErrorCode.RATE_LIMITED, e.getMessage(), new DataExecutionResponse(responseData),e.getDetails(), e);
                         }
                         throw new DataBuilderFrameworkException(DataBuilderFrameworkException.ErrorCode.BUILDER_EXECUTION_ERROR,
                                 "Error running builder: " + builderMeta.getName(), e.getDetails(), e, new DataExecutionResponse(responseData));

@@ -35,7 +35,7 @@ public class MultiThreadedDataFlowExecutor extends DataFlowExecutor {
                                         DataFlowInstance dataFlowInstance,
                                         DataDelta dataDelta,
                                         DataFlow dataFlow,
-                                        DataBuilderFactory builderFactory) throws DataBuilderFrameworkException, DataValidationException {
+                                        DataBuilderFactory builderFactory) throws DataBuilderFrameworkException, DataValidationException, RateLimitException {
         CompletionService<DataContainer> completionExecutor = new ExecutorCompletionService<DataContainer>(executorService);
         ExecutionGraph executionGraph = dataFlow.getExecutionGraph();
         DataSet dataSet = dataFlowInstance.getDataSet().accessor().copy(); //Create own copy to work with
@@ -255,6 +255,10 @@ public class MultiThreadedDataFlowExecutor extends DataFlowExecutor {
                     } catch (Throwable error) {
                         logger.error("Error running post-execution listener: ", error);
                     }
+                }
+                if (DataBuilderException.ErrorCode.RATE_LIMITED == e.getErrorCode())
+                {
+                    throw new RateLimitException(RateLimitException.ErrorCode.RATE_LIMITED, e.getMessage(), new DataExecutionResponse(responseData),e.getDetails(), e);
                 }
                 return new DataContainer(builderMeta, new DataBuilderFrameworkException(DataBuilderFrameworkException.ErrorCode.BUILDER_EXECUTION_ERROR,
                         "Error running builder: " + builderMeta.getName(), e.getDetails(), e));

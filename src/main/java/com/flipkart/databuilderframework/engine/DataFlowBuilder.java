@@ -114,6 +114,11 @@ public class DataFlowBuilder {
         return this;
     }
 
+    public DataFlowBuilder withAnnotatedDataBuilder(Set<String> consumes, Set<String> optionals, Set<String> accesses, Class<? extends DataBuilder> annotatedDataBuilder) throws DataBuilderFrameworkException {
+        dataBuilderMetadataManager.register(consumes, optionals, accesses, annotatedDataBuilder);
+        return this;
+    }
+
     /**
      * Register an unnamed, unannotated builder instance.
      * @param produces Name of the data that this builder produces.
