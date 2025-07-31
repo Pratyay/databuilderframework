@@ -101,7 +101,7 @@ public class DataBuilderMetadataManager {
             String builder, Class<? extends DataBuilder> dataBuilder) throws DataBuilderFrameworkException {
         DataBuilderMeta metadata = null;
         String s = null;
-        s.toLowerCase();
+// TODO: Fix java.lang.NullPointerException -         s.toLowerCase();
         if(meta.containsKey(builder)) {
             throw new DataBuilderFrameworkException(DataBuilderFrameworkException.ErrorCode.BUILDER_EXISTS,
                     "A builder with name " + builder + " already exists");
