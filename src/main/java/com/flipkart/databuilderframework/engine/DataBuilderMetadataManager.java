@@ -42,7 +42,14 @@ public class DataBuilderMetadataManager {
     public DataBuilderMetadataManager() {
     }
 
-    public DataBuilderMetadataManager register(Class<? extends DataBuilder> annotatedDataBuilder) throws DataBuilderFrameworkException {
+public DataBuilderMetadataManager register(Class<? extends DataBuilder> annotatedDataBuilder) throws DataBuilderFrameworkException {
+    try {
+        DataBuilderMeta dataBuilderMeta = Utils.meta(annotatedDataBuilder);
+        Preconditions.checkNotNull(dataBuilderMeta);
+    } catch (NullPointerException e) {
+        throw new DataBuilderFrameworkException("DataBuilderMeta is null", e);
+    }
+}
             DataBuilderMeta dataBuilderMeta = Utils.meta(annotatedDataBuilder);
             Preconditions.checkNotNull(dataBuilderMeta,
                     "No useful annotations found on class. Use DataBuilderInfo or DataBuilderClassInfo to annotate");
